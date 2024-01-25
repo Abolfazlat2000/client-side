@@ -74,6 +74,7 @@ height: 50px;
   font-weight: bold;
   font-size: medium;
   margin-top: 1px;
+  padding-bottom: 10px;
 }
 
 .categoryList-container, .page-container {
@@ -167,6 +168,23 @@ height: 50px;
   font-size: x-large;
   margin-top: 20px;
 }
+
+.questions {
+  margin-left: 300px;
+  margin-bottom: 100px;
+  font-size: larger;
+  font-weight: bold;
+}
+
+/* .customButtonStyle {
+  background-color: '#33737d';
+  color: white;
+  font-size: medium;
+  padding-left: 40;
+  padding-right: 40;
+  padding-top: 10;
+  padding-bottom: 10;
+} */
 
 
 

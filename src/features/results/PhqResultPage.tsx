@@ -2,12 +2,27 @@ import { useEffect, useState } from "react";
 import NavBar from "../../app/layout/NavBar";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Accordion, AccordionTitle, Image, Message, MessageHeader, MessageItem, MessageList } from "semantic-ui-react";
+import { Accordion, AccordionTitle, Button, Image, Message, MessageHeader, MessageItem, MessageList } from "semantic-ui-react";
 
-export default observer( function GadResultPage(){
+export default observer( function PhqResultPage(){
     const {counselingStore} = useStore();
-    
+    const {setActiveItem} = counselingStore;
     const [defaultActiveIndex] = useState();
+
+    const customButtonStyle = {
+        backgroundColor: '#33737d',
+        color: 'white',
+        fontSize: 'medium',
+        paddingRight: 40,
+        paddingLeft: 40,
+        paddingTop: 10,
+        paddingBottom: 10
+    }; 
+
+    const handleButtonClick = () => {
+        setActiveItem('homePage');
+    }
+
     // const {calculateFinalResult} = counselingStore;
     // useEffect(() => {
     //     calculateFinalResult([
@@ -74,7 +89,7 @@ export default observer( function GadResultPage(){
                         <p style={{fontSize: 'meduim', fontWeight: 'bold'}}>Remember, managing depression is a process, and it's okay to seek help. If you or someone you know is struggling, consider reaching out to a mental health professional for personalized assistance.</p>
                     </MessageList>
                 </Message>
-
+                <Button onClick={handleButtonClick} style={customButtonStyle}  type='button'>Take me to The Home</Button>
 
             </div>
         </div>

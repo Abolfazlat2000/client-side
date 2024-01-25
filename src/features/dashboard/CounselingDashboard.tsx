@@ -18,12 +18,14 @@ import { observer } from "mobx-react-lite";
 
 
 export default observer(function CounselingDashboard(){
+    
     const {counselingStore} = useStore();
     const {activeItem} = counselingStore;
 
     const pages = {
         gadDetails: <GadDetails />,
         phqDetails: < PhqDetails />,
+        mbtiDetails: <MbtiDetails />,
         gadQuestionPage: <GadQuestionPage />,
         phqQuestionPage: <PhqQuestionPage />,
         mbtiQuestionPage: <MbtiQuestionPage />,

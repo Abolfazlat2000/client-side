@@ -6,11 +6,12 @@ import { useEffect, useState } from 'react';
 import { useStore } from '../../app/stores/store';
 import MbtiDetails from '../details/MbtiDetails';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 // import { CategoryReadDTO } from '../../app/shared/CategoryReadDto';
 
 
 
-export default function CategoryList(){
+export default observer( function CategoryList(){
     const {counselingStore} = useStore();
     const {setActiveItem, setCategoryId} = counselingStore;
     const navigate = useNavigate();
@@ -48,12 +49,13 @@ export default function CategoryList(){
     //     navigate('/PhqDetails');
     // }
     const handleOnclickButton = (id: number) => {
-        if(id === 1)
-            navigate('/MbtiDetails');
-        if(id === 2)
-            navigate('/PhqDetails');
-        if(id === 3)
-            navigate('/GadDetails');
+        if(id === 1){
+            setActiveItem('mbtiDetails');
+        } else if(id === 2){
+            setActiveItem('phqDetails');
+        } else if(id === 3){
+            setActiveItem('gadDetails');
+        }
     }
     
     return(
@@ -110,4 +112,4 @@ export default function CategoryList(){
         
         </>
     );
-}
+})

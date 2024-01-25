@@ -3,8 +3,9 @@ import NavBar from '../../app/layout/NavBar';
 import { Button, Image } from 'semantic-ui-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
-export default function PhqDetails() {
+export default observer( function PhqDetails() {
     const {counselingStore} = useStore();
     const {setActiveItem} = counselingStore;
     const navigate = useNavigate();
@@ -18,19 +19,19 @@ export default function PhqDetails() {
         paddingBottom: 10
     };
     const handleOnclickButton = () => {
-        navigate('/AgreementPage');
+        setActiveItem("agreementPage");
     }
     return(
         <>
             <NavBar />
             <div className='page-container'>
-                <div className='Title'>
+                <div className='Title'> 
                     <h1 style={{marginTop: 50, color: '#48767d', fontWeight: 'bolder', fontSize: '3rem', textAlign: 'center'}}>PHQ-9</h1>
                 </div>
                 <div className='description-image'>
                     <div className='Description'>
                         <p style={{marginTop: -20, marginLeft: 120, fontSize: '1.6rem', fontWeight: 'medium'}}>Welcome to our PHQ-9 Test!</p>
-                        <p style={{ marginTop:-60, marginRight: 100, marginLeft: 120, direction: 'ltr', fontWeight: 'normal', fontSize: '1.2rem', lineHeight: 2.5}}>
+                        <p style={{ marginTop: -60, marginRight: 100, marginLeft: 120, direction: 'ltr', fontWeight: 'normal', fontSize: '1.2rem', lineHeight: 2.5}}>
                             <br />a powerful instrument for assessing and understanding your emotional well-being! This nine-question survey is designed to explore the presence and severity of symptoms associated with depression. Take charge of your well-being by completing the PHQ-9 Test today. Your mental health journey starts here.
                         </p>
                         <div className='Start-button' style={{marginLeft: 125}}>
@@ -44,4 +45,4 @@ export default function PhqDetails() {
             </div>
         </>
     )
-}
+})

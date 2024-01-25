@@ -35,7 +35,7 @@ export default observer(function HomePage(){
                 <Image src='assets/pic7.JPG' alt='home-page-background' fluid style={{position: 'fixed', top: 60, left: 0, width: '100%', height: '100%', zIndex: -1}} />
                 <div className={`text-container ${animationClass}`}>
                     <h2 className="text-header">
-                        Elavte Your Well-being with<br />Insightful Psychological Tests
+                        Elvate Your Well-being with<br />Insightful Psychological Tests
                     </h2>
                     <h4 className="text-main" >
                         {/*a dedicated space for enhancing mental well-being<br />through advanced psycological assessments. */}

@@ -3,27 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Grid } from "semantic-ui-react";
 import NavBar from "../../app/layout/NavBar";
 import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 
-export default function AgreementPage(){
+export default observer(function AgreementPage(){
     
     const [agree, setAgree] = useState(false);
     const {counselingStore} = useStore();
-    const {categoryId} = counselingStore;
-    const navigate = useNavigate();
+    const {categoryId, setActiveItem} = counselingStore;
+
 
     const handleAgree = () => {
         if(agree){
-            navigate('/UserInfoForm');
+            setActiveItem('userInfoForm');
         }
     };
     const handleCancel = () => {
         if(categoryId === 1){
-            navigate('/MbtiDetails');
+           setActiveItem('mbtiDetails');
         } else if(categoryId === 2){
-            navigate('/PhqDetails');
+            setActiveItem('phqDetails');
         } else if(categoryId === 3){
-            navigate('/GadDetails');
+            setActiveItem('gadDetails');
         }
         console.log("canceled");
     };
@@ -60,4 +61,4 @@ export default function AgreementPage(){
             </div>
         </>
     )
-}
+})

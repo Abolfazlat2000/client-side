@@ -9,8 +9,8 @@ export default class CounselingStore{
     activeItem: string = "";
     currentQuestionIndex: number = 0;
     tests: TestReadDTO[] = [];
-    selectedAnswerTitle: string = "";
-    answerValue: number | null = null;
+    userAnswerId: number = 1;
+    userId: number = 1;
     result: number = 0;
 
     constructor(){
@@ -44,9 +44,16 @@ export default class CounselingStore{
         return this.tests[this.currentQuestionIndex];
     }
 
-    setSelectedAnswerId(answerId: number, score: number){
-        this.selectedAnswerId = answerId;
+    getResult(score: number){
         this.result += score;
+    }
+
+    incrementUserAnswerId = () => {
+        this.userAnswerId += 1;
+    };
+
+    incrementUserId = () => {
+        this.userId += 1;
     }
     // calculateFinalResult(thresholds: {min: number; max: number; resultType: string}[]){
     //     const finalResult = this.result;

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default observer (function AdditionalQuestions(){
     const {counselingStore} = useStore();
-    const {setActiveItem, nextQuestion, getCurrentQuestion, loadTests, categoryId, setSelectedAnswerId, selectedAnswerId} = counselingStore;
+    const {setActiveItem, nextQuestion, getCurrentQuestion, getResult, loadTests,userAnswerId, incrementUserAnswerId, categoryId} = counselingStore;
     const [currentQuestion, setCurrentQuestion] = useState<TestReadDTO | null>(null);
     const categoryIds = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     const navigate = useNavigate();
@@ -30,20 +30,15 @@ export default observer (function AdditionalQuestions(){
         }
     };
 
-    const handleNextQuestion = () => {
-        try{
-            await agent.Tests.UpdateAnswerValue(selectedAnswerId);
-            
-        } catch (error) {
-            console.error('Error updating value', error);
-        }
+    const  handleNextQuestion = async () => {
+
         if(currentQuestion?.number === 11) {
             if (categoryId === 1){
-                navigate("MbtiResultPage")
+                setActiveItem("mbtiResultPage")
             } else if (categoryId === 2){
-                navigate("PhqResultPage");
+                setActiveItem("phqResultPage");
             } else if (categoryId === 3) {
-                navigate("GadResultPage")
+                setActiveItem("gadResultPage")
             }
         } else {
             nextQuestion();
@@ -51,14 +46,22 @@ export default observer (function AdditionalQuestions(){
         }
     };
 
-    const handleAnswerSelect = async(selectedAnswerId: number, score: number) => {
-        setSelectedAnswerId(selectedAnswerId, score);
-        try{
-            await agent.Tests.UpdateAnswerValue(selectedAnswerId);
-            setSelectedAnswerId(selectedAnswerId, score);
-            
+    const handleAnswerSelect = async (answer: AnswerReadDTO, inputAnswer?: string) => {
+        getResult(answer.score);
+        let userAnswer = answer.title;
+        if (answer.categoryID !== 4 && answer.categoryID !== 5) {
+            userAnswer = inputAnswer ?? answer.title ;
+        }
+        try {
+            await agent.Tests.CreateUserAnswer({
+                userAnswerID: userAnswerId,
+                userAnswerTitle: answer.title,
+                categoryID: answer.categoryID,
+                questionNumber: currentQuestion?.number ?? 0
+            });
+            incrementUserAnswerId();
         } catch (error) {
-            console.error('Error updating value', error);
+            console.error('Error creating user answer', error);
         }
     };
 
@@ -87,14 +90,15 @@ export default observer (function AdditionalQuestions(){
                     <p style={{marginLeft: 450, marginRight: 450}}>{currentQuestion.question}</p>
                 
                 {/* answers will come in multiple choise form from API */}
-                    {/* <ul>
+                    <ul>
                         {currentQuestion.answers.map((answer) => (
                         
-                            <li key={answer.answerID} onClick={() => handleAnswerSelect()}>
-                                {answer.title}
+                            <li key={answer.answerID} onClick={() => handleAnswerSelect(answer)}>
+                                {(currentQuestion.categoryID === 4 || currentQuestion.categoryID ===5 || currentQuestion.categoryID === 6) && answer.isPhoto === true && <img src={answer.value} alt={answer.title} />}
+                                {(currentQuestion.categoryID !== 4 && currentQuestion.categoryID !== 5) && <input type="text" onChange={(e) => handleAnswerSelect(answer, e.target.value)}/>}
                             </li>
                         ))}
-                    </ul> */}
+                    </ul>
                     <div className='button-container' style={{marginBottom: 150, marginLeft: 100}} >
                         {/* we have to use if statement here,        
                         when we're in the last question, the content of button will be finish */}

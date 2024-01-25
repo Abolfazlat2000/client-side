@@ -3,8 +3,9 @@ import NavBar from '../../app/layout/NavBar';
 import { Button, Image } from 'semantic-ui-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
-export default function MbtiDetails() {
+export default observer( function MbtiDetails() {
     const {counselingStore} = useStore();
     const {setActiveItem} = counselingStore;
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function MbtiDetails() {
         paddingBottom: 10
     };
     const handleOnclickButton = () => {
-        navigate('/AgreementPage');
+        setActiveItem("agreementPage");
     }
     return(
         <>
@@ -45,4 +46,4 @@ export default function MbtiDetails() {
             </div>
         </>
     )
-}
+})

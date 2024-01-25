@@ -3,8 +3,9 @@ import NavBar from '../../app/layout/NavBar';
 import { Button, Image } from 'semantic-ui-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
-export default function GadDetails() {
+export default observer( function GadDetails() {
     const {counselingStore} = useStore();
     const {setActiveItem} = counselingStore;
     const navigate = useNavigate();
@@ -18,8 +19,9 @@ export default function GadDetails() {
         paddingTop: 10,
         paddingBottom: 10
     };
+    
     const handleOnclickButton = () => {
-        navigate('/AgreementPage');
+        setActiveItem("agreementPage");
     }
     return(
         <>
@@ -45,4 +47,4 @@ export default function GadDetails() {
             </div>
         </>
     )
-}
+})

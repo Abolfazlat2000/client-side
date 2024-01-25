@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, Form } from "semantic-ui-react";
 import NavBar from "../../app/layout/NavBar";
 import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import { UserSubmitDTO } from "../../app/shared/UserSubmitDTO";
+import agent from "../../app/api/agent";
 
 const genderOptions = [
     {key: 'female', text: 'Female', value: 'female'},
@@ -10,9 +13,9 @@ const genderOptions = [
     {key: 'other', text: 'Other', value: 'other'},
 ]; 
 
-export default function UserInfoForm(){
+export default observer(function UserInfoForm(){
     const {counselingStore} = useStore();
-    const {setActiveItem, categoryId} = counselingStore;
+    const {setActiveItem, categoryId, userId, incrementUserId} = counselingStore;
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
     const [name, setName] = useState('');
@@ -20,12 +23,29 @@ export default function UserInfoForm(){
 
     const handleSubmit = () => {
         if(gender && age && name) {
-            if(categoryId == 1)
-                navigate("MbtiQuestionPage");
-            else if(categoryId == 2)
-                navigate("PhqQuestionPage");
-            else if(categoryId == 3)
-                navigate("GadQuestionPage");
+            const user: UserSubmitDTO = {
+                userId: userId,
+                userName: name,
+                userGender: gender,
+                userAge: Number(age),
+            };
+            incrementUserId();
+    
+            try {
+                (async () => {
+                    await agent.Tests.CreateUser(user);
+                })();
+                console.log('User created successfully');
+            } catch (error) {
+                console.error('Failed to create user:', error);
+            }
+            if(categoryId == 1){
+                setActiveItem("mbtiQuestionPage");
+            } else if(categoryId == 2){
+                setActiveItem("phqQuestionPage");
+            } else if(categoryId == 3){
+                setActiveItem("gadQuestionPage");
+            }
         }
     }
 
@@ -62,4 +82,4 @@ export default function UserInfoForm(){
             </div>
         </>
     )
-}
+})

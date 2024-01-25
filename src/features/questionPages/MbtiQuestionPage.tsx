@@ -11,15 +11,19 @@ export default observer (function MbtiQuestionPage(){
     const [currentQuestion, setCurrentQuestion] = useState<TestReadDTO | null>(null);
 
     useEffect(() => {
-        loadTests(1);
-        setCurrentQuestion(getCurrentQuestion);
-    }, []);
+        const loadInitialData = async () => {
+            await loadTests(1);
+            setCurrentQuestion(getCurrentQuestion);
+        };
+    
+        loadInitialData();
+    }, [loadTests, getCurrentQuestion, setCurrentQuestion]);
 
-    const handleNextQuestion = () => {
+    const handleNextQuestion = async () => {
         if(currentQuestion?.number === 60) {
-            setActiveItem("additionalQuestions")
+            setActiveItem("AdditionalQuestions")
         } else {
-            nextQuestion();
+            await nextQuestion();
             setCurrentQuestion(getCurrentQuestion);
         }
     };
@@ -42,20 +46,27 @@ export default observer (function MbtiQuestionPage(){
                     <p style={{marginTop: 50, color: '#48767d', fontWeight: 'bolder', fontSize: '2rem', textAlign: 'center'}}>MBTI Test</p>
                 </div>
                 {currentQuestion && (
-                <div className='questions'>
-                    {/* questions should come one by one from API */}
-                    <p style={{marginLeft: 450, marginRight: 450}}>{currentQuestion.question}</p>
-                
-                {/* answers will come in multiple choise form from API */}
-                    {/* <ul>
-                        {currentQuestion.answers.map((answer) => (
-                            <li key={answer.id}>{answer.title}</li>
-                        ))}
-                    </ul> */}
-                    <div className='button-container' style={{marginBottom: 150, marginLeft: 100}} >
+                <div>
+                    <div className='questions'>
+                        {/* questions should come one by one from API */}
+                        <p>{currentQuestion.question}</p>
+
+                        {/* answers will come in multiple choise form from API */}
+                        <ul style={{ listStyleType: 'none' }}>
+                            {currentQuestion.answers.map((answer) => (
+                                <li key={answer.answerID} style={{ marginBottom: '10px' }}>
+                                    <label>
+                                        <input type="radio" name="answer" />
+                                        {answer.title}
+                                    </label>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className='button-container' style={{marginBottom: '120px', marginLeft: 50, marginTop: '50px'}}>
                         {/* we have to use if statement here,        
                         when we're in the last question, the content of button will be finish */}
-                        <Button onClick={handleNextQuestion} style={customButtonStyle}  type='button'>
+                        <Button onClick={handleNextQuestion} style={customButtonStyle} type='button'>
                             {currentQuestion?.number === 60 ? 'Further' : 'Next'}
                         </Button>
                     </div>

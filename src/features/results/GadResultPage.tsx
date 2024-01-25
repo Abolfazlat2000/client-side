@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default observer( function GadResultPage(){
     const {counselingStore} = useStore();
     const [defaultActiveIndex] = useState();
-    const navigate = useNavigate();
+    const {setActiveItem} = counselingStore;
+
     const customButtonStyle = {
         backgroundColor: '#33737d',
         color: 'white',
@@ -29,7 +30,7 @@ export default observer( function GadResultPage(){
     //     ]);
     // }, []);
     const handleButtonClick = () => {
-        navigate('/HomePage');
+        setActiveItem('homePage');
     }
     return(
         <>

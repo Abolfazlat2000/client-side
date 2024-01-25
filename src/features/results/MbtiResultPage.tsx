@@ -1,6 +1,25 @@
+import { observer } from "mobx-react-lite";
 import NavBar from "../../app/layout/NavBar";
+import { Button } from "semantic-ui-react";
+import { useStore } from "../../app/stores/store";
 
-export default function MbtiResultPage(){
+export default observer( function MbtiResultPage(){
+    const {counselingStore} = useStore();
+    const {setActiveItem} = counselingStore;
+
+    const customButtonStyle = {
+        backgroundColor: '#33737d',
+        color: 'white',
+        fontSize: 'medium',
+        paddingRight: 40,
+        paddingLeft: 40,
+        paddingTop: 10,
+        paddingBottom: 10
+    };
+    
+    const handleButtonClick = () => {
+        setActiveItem('homePage');
+    }
     return(
         <>
         <NavBar />
@@ -20,7 +39,8 @@ export default function MbtiResultPage(){
             <div className="recommendation">
                 
             </div>
+            <Button onClick={handleButtonClick} style={customButtonStyle}  type='button'>Take me to The Home</Button>
         </div>
         </>
     )
-}
+})
