@@ -25,7 +25,6 @@ export default observer(function HomePage(){
     }, [])
 
     const handleOnclickButton = () => {
-        // navigate('/categoryList');
         setActiveItem('categoryList');
     }
     return(

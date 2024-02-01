@@ -42,6 +42,7 @@ import PhqResultPage from '../../features/results/PhqResultPage';
 import MbtiResultPage from '../../features/results/MbtiResultPage';
 import AdditionalQuestions from '../../features/questionPages/AdditionalQuestions';
 import { useStore } from '../stores/store';
+import ContactUs from '../../features/details/ContactUs';
 // import GadDetails from '../../features/details/GadDetails';
 
 // window.addEventListener('unhandlerrejection', event => {
@@ -63,24 +64,7 @@ export default function App(){
 
   return(
     <>
-      {/* <Routes>
-        <Route path='/' Component={HomePage}/>
-        <Route path='/CategoryList' Component={CategoryList} />
-        <Route path='/MbtiDetails' Component={MbtiDetails} />
-        <Route path='/GadDetails' Component={GadDetails} />
-        <Route path='/PhqDetails' Component={PhqDetails} />
-        <Route path='/AgreementPage' Component={AgreementPage} />
-        <Route path='/UserInfoForm' Component={UserInfoForm} />
-        <Route path='/UserInfoForm/PhqQuestionPage' Component={PhqQuestionPage} />
-        <Route path='/UserInfoForm/MbtiQuestionPage' Component={MbtiQuestionPage} />
-        <Route path='/UserInfoForm/GadQuestionPage' Component={GadQuestionPage} />
-        <Route path='/PhqResultPage' Component={PhqResultPage} />
-        <Route path='/GadResultPage' Component={GadResultPage} />
-        <Route path='/MbtiResultPage' Component={MbtiResultPage} />
-        <Route path='/AdditionalQuestionPage' Component={AdditionalQuestions} />
-      </Routes> */}
       <CounselingDashboard />
-      
 
     </>
 

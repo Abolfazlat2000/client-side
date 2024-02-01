@@ -1,20 +1,35 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "../stores/store";
+import { Button } from "semantic-ui-react";
 
 export default function NavBar(){
     const [isHoveredHome, setIsHoveredHome] = useState(false);
     const [isHoveredTests, setIsHoveredTests] = useState(false);
     const [isHoveredContact, setIsHoveredContact] = useState(false);
+    const {counselingStore} = useStore();
+    const {setActiveItem} = counselingStore;
 
 
     const HomeLinkStyle = {
         color: isHoveredHome ? '#48767d' : 'beige'
+
     }
     const TestsLinkStyle = {
         color: isHoveredTests ? '#48767d' : 'beige'
     }
     const ContactLinkStyle = {
         color: isHoveredContact ? '#48767d' : 'beige'
+    }
+
+    const handleHomeNavigation = () => {
+        setActiveItem('homePage');
+    }
+    const handleTestsNavigation = () => {
+        setActiveItem('categoryList');
+    }
+    const handleContactNavigation = () => {
+        setActiveItem('contactUs');
     }
     return(
         <nav className="navbar" >
@@ -23,13 +38,13 @@ export default function NavBar(){
             </div>
             <div className="right-side">
                 <span style={{paddingRight: 20}} >
-                    <Link to="/" style={HomeLinkStyle} className="navbar-link" onMouseOver={() => setIsHoveredHome(true)} onMouseOut={() => setIsHoveredHome(false)}>Home</Link>
+                    <p style={HomeLinkStyle} onClick={handleHomeNavigation} className="navbar-link" onMouseOver={() => setIsHoveredHome(true)} onMouseOut={() => setIsHoveredHome(false)}>Home</p>
                 </span>
                 <span style={{paddingRight : 20}}>
-                <Link to="/categoryList" style={TestsLinkStyle} className="navbar-link" onMouseOver={() => setIsHoveredTests(true)} onMouseOut={() => setIsHoveredTests(false)}>Tests</Link>
+                <p style={TestsLinkStyle} onClick={handleTestsNavigation} className="navbar-link" onMouseOver={() => setIsHoveredTests(true)} onMouseOut={() => setIsHoveredTests(false)}>Tests</p>
                 </span>
                 <span style={{paddingRight : 20}}>
-                <Link to="/fff" style={ContactLinkStyle} className="navbar-link" onMouseOver={() => setIsHoveredContact(true)} onMouseOut={() => setIsHoveredContact(false)}>Contact us</Link>
+                <p style={ContactLinkStyle} onClick={handleContactNavigation} className="navbar-link" onMouseOver={() => setIsHoveredContact(true)} onMouseOut={() => setIsHoveredContact(false)}>Contact us</p>
 
                 </span>
             </div>

@@ -15,6 +15,7 @@ import AdditionalQuestions from "../questionPages/AdditionalQuestions";
 import CategoryList from "../questionPages/CategoryList";
 import HomePage from "../../app/home/HomePage";
 import { observer } from "mobx-react-lite";
+import ContactUs from "../details/ContactUs";
 
 
 export default observer(function CounselingDashboard(){
@@ -36,7 +37,8 @@ export default observer(function CounselingDashboard(){
         userInfoForm: <UserInfoForm />,
         additionalQuestions: <AdditionalQuestions />,
         categoryList: <CategoryList />,
-        homePage: <HomePage />
+        homePage: <HomePage />,
+        contactUs: <ContactUs />
     }
 
     return(

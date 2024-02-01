@@ -44,8 +44,11 @@ height: 50px;
 }
 
 .right-side{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: beige;
-  padding-right: 30px;
+  padding-right: 10px;
   margin-top: -8px;
   font-weight: bold;
   font-size: larger;
@@ -61,7 +64,7 @@ height: 50px;
 
 .text-container {
   margin-top: 11em;
-  margin-left: 12em;
+  margin-left: 14em;
 }
 
 .text-header {
@@ -85,6 +88,21 @@ height: 50px;
   text-align: left;
   height: 100vh;
 }
+
+.contact-content{
+  width: 800px;
+  margin-bottom: 120px;
+  margin-left: 290px;
+}
+
+.contact-header{
+  padding-top: 30px;
+  margin-left: 50px;
+  color: #33737d;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
 
 .images-container {
   display: flex;
