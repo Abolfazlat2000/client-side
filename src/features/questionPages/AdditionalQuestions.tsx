@@ -30,7 +30,7 @@ export default observer (function AdditionalQuestions(){
         }
     };
 
-    const  handleNextQuestion = async () => {
+    const  handleNextQuestion = () => {
 
         if(currentQuestion?.number === 11) {
             if (categoryId === 1){
@@ -54,7 +54,7 @@ export default observer (function AdditionalQuestions(){
         }
         try {
             await agent.Tests.CreateUserAnswer({
-                userAnswerID: userAnswerId,
+                userAnswerID: userAnswerId, 
                 userAnswerTitle: answer.title,
                 categoryID: answer.categoryID,
                 questionNumber: currentQuestion?.number ?? 0

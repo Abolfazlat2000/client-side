@@ -35,7 +35,7 @@ export default observer(function CounselingDashboard(){
         mbtiResultPage: <MbtiResultPage />,
         agreementPage: <AgreementPage />,
         userInfoForm: <UserInfoForm />,
-        additionalQuestions: <AdditionalQuestions />,
+        AdditionalQuestions: <AdditionalQuestions />,
         categoryList: <CategoryList />,
         homePage: <HomePage />,
         contactUs: <ContactUs />

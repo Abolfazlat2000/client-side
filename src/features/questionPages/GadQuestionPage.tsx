@@ -25,7 +25,7 @@ export default observer (function GadQuestionPage(){
 
     const handleNextQuestion = () => {
         if(currentQuestion?.number === 7) {
-            setActiveItem("AdditionalQuestions")
+            setActiveItem("AdditionalQuestions");
         } else {
             counselingStore.nextQuestion();
             setCurrentQuestion(getCurrentQuestion);

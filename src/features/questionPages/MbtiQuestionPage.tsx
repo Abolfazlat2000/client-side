@@ -21,7 +21,7 @@ export default observer (function MbtiQuestionPage(){
 
     const handleNextQuestion = async () => {
         if(currentQuestion?.number === 60) {
-            setActiveItem("AdditionalQuestions")
+            setActiveItem("AdditionalQuestions");
         } else {
             await nextQuestion();
             setCurrentQuestion(getCurrentQuestion);
