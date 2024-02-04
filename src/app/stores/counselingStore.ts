@@ -10,7 +10,7 @@ export default class CounselingStore{
     currentQuestionIndex: number = 0;
     tests: TestReadDTO[] = [];
     userAnswerId: number = 1;
-    userId: number = 1;
+    userId: number = 10;
     result: number = 0;
 
     constructor(){
@@ -37,6 +37,7 @@ export default class CounselingStore{
       };
 
     nextQuestion(){
+        console.log(this.result);
         this.currentQuestionIndex += 1;
     }
 
@@ -55,15 +56,16 @@ export default class CounselingStore{
     incrementUserId = () => {
         this.userId += 1;
     }
-    // calculateFinalResult(thresholds: {min: number; max: number; resultType: string}[]){
-    //     const finalResult = this.result;
-    //     const resultType =  thresholds.find(({ min, max}) => finalResult >= min && finalResult <= max)?.resultType;
-    //     return resultType || 'Unknown';
-    // }
 
-    // resetResult() {
-    //     this.result = 0;
-    //     this.selectedAnswerId = null;
-    // }
+    calculateFinalResult(thresholds: {min: number; max: number; resultType: string}[]){
+        const finalResult = this.result;
+        const resultType =  thresholds.find(({ min, max}) => finalResult >= min && finalResult <= max)?.resultType;
+        return resultType || 'Unknown';
+    }
+
+    resetResult() {
+        this.result = 0;
+        this.userAnswerId = 0;
+    }
 
 }

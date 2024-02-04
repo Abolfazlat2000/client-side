@@ -34,11 +34,11 @@ export default observer (function AdditionalQuestions(){
 
         if(currentQuestion?.number === 11) {
             if (categoryId === 1){
-                setActiveItem("mbtiResultPage")
+                setActiveItem("mbtiResultPage");
             } else if (categoryId === 2){
                 setActiveItem("phqResultPage");
             } else if (categoryId === 3) {
-                setActiveItem("gadResultPage")
+                setActiveItem("gadResultPage");
             }
         } else {
             nextQuestion();

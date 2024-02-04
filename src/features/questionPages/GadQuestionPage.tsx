@@ -23,11 +23,11 @@ export default observer (function GadQuestionPage(){
         loadInitialData();
     }, [loadTests, getCurrentQuestion, setCurrentQuestion]);
 
-    const handleNextQuestion = async () => {
+    const handleNextQuestion = () => {
         if(currentQuestion?.number === 7) {
             setActiveItem("AdditionalQuestions")
         } else {
-            await nextQuestion();
+            counselingStore.nextQuestion();
             setCurrentQuestion(getCurrentQuestion);
         }
     };
@@ -42,9 +42,8 @@ export default observer (function GadQuestionPage(){
         paddingBottom: 10,
     };
 
-    const handleAnswerSelect = async (answer: AnswerReadDTO) => {
-        await getResult(answer.score);
-
+    const handleAnswerSelect = (answer: AnswerReadDTO) => {
+        counselingStore.getResult(answer.score);
     }
 
     return(

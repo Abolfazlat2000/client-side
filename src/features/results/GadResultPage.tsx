@@ -19,16 +19,18 @@ export default observer( function GadResultPage(){
         paddingTop: 10,
         paddingBottom: 10
     };
-    // const {calculateFinalResult} = counselingStore;
-    // useEffect(() => {
-    //     calculateFinalResult([
-    //         {min: 0, max:4, resultType:'Minimal anxiety'},
-    //         {min: 5, max:9, resultType:'Mild anxiety'},
-    //         {min: 10, max:14, resultType:'Moderate anxiety'},
-    //         {min: 15, max:21, resultType:'severe anxiety'}
+
+    const {calculateFinalResult} = counselingStore;
+    useEffect(() => {
+        counselingStore.calculateFinalResult([
+            {min: 0, max:4, resultType:'Minimal anxiety'},
+            {min: 5, max:9, resultType:'Mild anxiety'},
+            {min: 10, max:14, resultType:'Moderate anxiety'},
+            {min: 15, max:21, resultType:'severe anxiety'}
             
-    //     ]);
-    // }, []);
+        ]);
+    }, [counselingStore.calculateFinalResult, counselingStore]);
+
     const handleButtonClick = () => {
         setActiveItem('homePage');
     }
@@ -38,13 +40,13 @@ export default observer( function GadResultPage(){
         <div className="page-container">
             <div className="show-score">
                 <p style={{color: '#242424'}}>You have:
-                    {/* {calculateFinalResult([
+                    {calculateFinalResult([
             {min: 0, max:4, resultType:'Minimal anxiety'},
             {min: 5, max:9, resultType:'Mild anxiety'},
             {min: 10, max:14, resultType:'Moderate anxiety'},
             {min: 15, max:21, resultType:'severe anxiety'}
             
-        ])} */}
+        ])}
                 </p>
             </div>
             <div className="recommendation">

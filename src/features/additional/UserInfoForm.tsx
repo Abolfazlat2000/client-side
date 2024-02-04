@@ -15,16 +15,15 @@ const genderOptions = [
 
 export default observer(function UserInfoForm(){
     const {counselingStore} = useStore();
-    const {setActiveItem, categoryId, userId, incrementUserId} = counselingStore;
+    const {setActiveItem, categoryId, incrementUserId} = counselingStore;
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
     const [name, setName] = useState('');
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleSubmit = () => {
         if(gender && age && name) {
             const user: UserSubmitDTO = {
-                userId: userId,
                 userName: name,
                 userGender: gender,
                 userAge: Number(age),

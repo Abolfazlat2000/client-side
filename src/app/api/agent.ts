@@ -37,17 +37,17 @@ const requests = {
 }
 
 const Tests = {
-    CategoryList : () => requests.get<CategoryReadDTO[]>('/Category/GetAllCategories'),
-    Categorydetail: (id : number) => requests.get<CategoryReadDTO>(`Category/GetCategoryById/${id}`),
-    GetCategoryById: (id : number) => requests.get<CategoryReadDTO>(`Category/GetCategoryById/${id}`),
-    CreateCategory: (category : CategorySubmitDTO) => axios.post<void>('Category/CreateCategory', category),
-    QuestionList: (id : number) => requests.get<TestReadDTO[]>(`Test/GetTestByCategory/${id}`),
-    GetTest: (id : number) => requests.get<TestReadDTO>(`Test/GetTestById/${id}`),
-    AnswerList: (id : number) => requests.get<AnswerReadDTO>(`Answers/GetAnswersByCategory/${id}`),
-    CreateTest: (test : TestSubmitDTO) => axios.post<void>('Test/CreateTest', test),
-    CreateAnswer: (answer : AnswerSubmitDTO) => axios.post<void>('Answers/CreateAnswer', answer),
-    CreateUser: (user : UserSubmitDTO) => axios.post<void>('User/CreateUser', user),
-    CreateUserAnswer: (userAnswer : UserAnswerSubmitDTO) => axios.post<void>('UserAnswer/CreateUserAnswer', userAnswer),
+    CategoryList : () => requests.get<CategoryReadDTO[]>('/Category/GetAllCategories/'),
+    Categorydetail: (id : number) => requests.get<CategoryReadDTO>(`/Category/GetCategoryById/${id}/`),
+    GetCategoryById: (id : number) => requests.get<CategoryReadDTO>(`/Category/GetCategoryById/${id}/`),
+    CreateCategory: (category : CategorySubmitDTO) => axios.post<void>('/Category/CreateCategory/', category),
+    QuestionList: (id : number) => requests.get<TestReadDTO[]>(`/Test/GetTestByCategory/${id}/`),
+    GetTest: (id : number) => requests.get<TestReadDTO>(`/Test/GetTestById/${id}/`),
+    AnswerList: (id : number) => requests.get<AnswerReadDTO>(`/Answers/GetAnswersByCategory/${id}/`),
+    CreateTest: (test : TestSubmitDTO) => axios.post<void>('/Test/CreateTest/', test),
+    CreateAnswer: (answer : AnswerSubmitDTO) => axios.post<void>('/Answers/CreateAnswer/', answer),
+    CreateUser: (user : UserSubmitDTO) => axios.post<void>('/User/CreateUser/', user),
+    CreateUserAnswer: (userAnswer : UserAnswerSubmitDTO) => axios.post<void>('/UserAnswer/CreateUserAnswer/', userAnswer),
 }
 
 const agent = {
