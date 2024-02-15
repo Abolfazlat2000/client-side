@@ -2,6 +2,7 @@ import { computed, makeAutoObservable, observable, runInAction } from "mobx";
 import { CategoryReadDTO } from "../shared/CategoryReadDto";
 import { AnswerReadDTO } from "../shared/AnswerReadDTO";
 import { TestReadDTO } from "../shared/TestReadDTO";
+import { ExtraQuestionDTO } from '../../app/shared/ExtraQuestionDTO';
 import agent from "../api/agent";
 
 export default class CounselingStore{
@@ -12,6 +13,9 @@ export default class CounselingStore{
     userAnswerId: number = 1;
     userId: number = 10;
     result: number = 0;
+    extraTests!: ExtraQuestionDTO;
+    extAnswers: string[] | undefined;
+    isInput: boolean | undefined;
 
     constructor(){
         makeAutoObservable(this)
@@ -27,10 +31,19 @@ export default class CounselingStore{
             console.log(error);
         }
     }
+    loadExtraTests = async (id: number) => {
+        try {
+            this.extraTests = await agent.Tests.GetExtraQuestion(id);
+            console.log(this.extraTests);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     setCategoryId = (categoryId: number) => {
         this.categoryId = categoryId;
-    } 
+    }
 
     setActiveItem = (activeItem: string) => {
         this.activeItem = activeItem;
@@ -45,6 +58,17 @@ export default class CounselingStore{
         return this.tests[this.currentQuestionIndex];
     }
 
+    handleAnswer = async() => {
+        await new Promise( resolve => setTimeout(resolve, 5000) );
+        const ans = this.extraTests?.answer;
+        let answers = ans?.split("|");
+        if (answers[0] === "false") {
+            this.isInput = true;
+        }
+        answers?.shift();
+        this.extAnswers = answers;
+        console.log(this.extAnswers);
+    };
     getResult(score: number){
         this.result += score;
     }
