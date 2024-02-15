@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router-dom';
 
 export default observer (function AdditionalQuestions(){
     const {counselingStore} = useStore();
-    const {setActiveItem, nextQuestion, getCurrentQuestion, handleAnswer,extAnswers, isInput, categoryId, loadExtraTests,extraTests} = counselingStore;
+    const {setActiveItem, nextQuestion, getCurrentQuestion, handleExtraAnswer,extAnswers, isInput, categoryId, loadExtraTests,extraTests} = counselingStore;
     const [currentQuestion, setCurrentQuestion] = useState<ExtraQuestionDTO | null>(null);
-    const categoryIds = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    const [categoryIds, setCategoryIds] = useState([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
     const navigate = useNavigate();
 
 
@@ -21,19 +21,23 @@ export default observer (function AdditionalQuestions(){
         loadQuestionForCurrentCategory();
     }, []);
 
-    const loadQuestionForCurrentCategory = () => {
+    const loadQuestionForCurrentCategory = async () => {
         if(categoryIds.length > 0) {
-            const currentCategoryId = categoryIds.shift();
+            console.log(categoryIds);
+            const currentCategoryId = categoryIds[0];
+            const newCategoryIds = categoryIds.slice(1); // Create a new array without the first element
+            setCategoryIds(newCategoryIds); // Update state
+            console.log(newCategoryIds);
+            console.log(currentCategoryId);
             if (currentCategoryId !== undefined) {
-                loadExtraTests(currentCategoryId);
-                handleAnswer();
+                await loadExtraTests(currentCategoryId);
+                handleExtraAnswer();
                 console.log(extraTests);
             }
         }
     };
 
     const  handleNextQuestion = () => {
-
         if(categoryIds.length === 0) {
             if (categoryId === 1){
                 setActiveItem("mbtiResultPage");

@@ -13,9 +13,9 @@ export default class CounselingStore{
     userAnswerId: number = 1;
     userId: number = 10;
     result: number = 0;
-    extraTests!: ExtraQuestionDTO;
-    extAnswers: string[] | undefined;
-    isInput: boolean | undefined;
+    extraTests: ExtraQuestionDTO | undefined;
+    extAnswers: string[] = [];
+    isInput: boolean = false;
 
     constructor(){
         makeAutoObservable(this)
@@ -47,7 +47,7 @@ export default class CounselingStore{
 
     setActiveItem = (activeItem: string) => {
         this.activeItem = activeItem;
-      };
+    }
 
     nextQuestion(){
         console.log(this.result);
@@ -58,24 +58,24 @@ export default class CounselingStore{
         return this.tests[this.currentQuestionIndex];
     }
 
-    handleAnswer = async() => {
-        await new Promise( resolve => setTimeout(resolve, 5000) );
+    handleExtraAnswer = () => {
         const ans = this.extraTests?.answer;
-        let answers = ans?.split("|");
-        if (answers[0] === "false") {
+        let answers = ans!.split("|");
+        console.log(answers);
+        if (answers![0] === "false") {
             this.isInput = true;
         }
-        answers?.shift();
+        answers.shift();
         this.extAnswers = answers;
-        console.log(this.extAnswers);
-    };
+    }
+
     getResult(score: number){
         this.result += score;
     }
 
     incrementUserAnswerId = () => {
         this.userAnswerId += 1;
-    };
+    }
 
     incrementUserId = () => {
         this.userId += 1;
