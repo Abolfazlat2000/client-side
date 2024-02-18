@@ -15,6 +15,7 @@ export default class CounselingStore{
     result: number = 0;
     extraTests: ExtraQuestionDTO | undefined;
     extAnswers: string[] = [];
+    extAnswersTitle: string[] = [];
     isInput: boolean = false;
 
     constructor(){
@@ -34,7 +35,6 @@ export default class CounselingStore{
     loadExtraTests = async (id: number) => {
         try {
             this.extraTests = await agent.Tests.GetExtraQuestion(id);
-            console.log(this.extraTests);
 
         } catch (error) {
             console.log(error);
@@ -50,7 +50,6 @@ export default class CounselingStore{
     }
 
     nextQuestion(){
-        console.log(this.result);
         this.currentQuestionIndex += 1;
     }
 
@@ -61,12 +60,20 @@ export default class CounselingStore{
     handleExtraAnswer = () => {
         const ans = this.extraTests?.answer;
         let answers = ans!.split("|");
-        console.log(answers);
         if (answers![0] === "false") {
             this.isInput = true;
         }
         answers.shift();
         this.extAnswers = answers;
+    }
+    handleAnswerTitle = () => {
+        const ansTitle = this.extraTests?.answerTitle;
+        let answersTitle = ansTitle!.split("|");
+        // if (answersTitle![0] === "false") {
+        //     this.isInput = true;
+        // }
+        answersTitle.shift();
+        this.extAnswersTitle = answersTitle;
     }
 
     getResult(score: number){

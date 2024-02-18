@@ -203,7 +203,11 @@ height: 50px;
   padding-top: 10;
   padding-bottom: 10;
 } */
-
+.listContainer {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
 
 
 @keyframes slideInFromBottom {

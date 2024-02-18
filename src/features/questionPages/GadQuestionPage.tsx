@@ -13,13 +13,13 @@ export default observer (function GadQuestionPage(){
     const {counselingStore} = useStore();
     const {setActiveItem, nextQuestion, getCurrentQuestion, getResult, loadTests, userAnswerId} = counselingStore;
     const [currentQuestion, setCurrentQuestion] = useState<TestReadDTO | null>(null);
-
+    const [selectedAnswer, setSelectedAnswer] = useState("");
     useEffect(() => {
         const loadInitialData = async () => {
             await loadTests(3);
             setCurrentQuestion(getCurrentQuestion);
         };
-    
+
         loadInitialData();
     }, [loadTests, getCurrentQuestion, setCurrentQuestion]);
 
@@ -29,6 +29,7 @@ export default observer (function GadQuestionPage(){
         } else {
             counselingStore.nextQuestion();
             setCurrentQuestion(getCurrentQuestion);
+            setSelectedAnswer("");
         }
     };
 
@@ -42,9 +43,13 @@ export default observer (function GadQuestionPage(){
         paddingBottom: 10,
     };
 
+
     const handleAnswerSelect = (answer: AnswerReadDTO) => {
         counselingStore.getResult(answer.score);
+        setSelectedAnswer(answer.answerID.toString());
+
     }
+
 
     return(
         <>
@@ -61,18 +66,24 @@ export default observer (function GadQuestionPage(){
 
                         {/* answers will come in multiple choise form from API */}
                         <ul style={{ listStyleType: 'none' }}>
-                            {currentQuestion.answers.map((answer) => (
-                                <li key={answer.answerID} style={{ marginBottom: '10px' }}>
-                                    <label>
-                                        <input type="radio" name="answer" onClick={() => handleAnswerSelect(answer)} />
-                                        {answer.title}
-                                    </label>
-                                </li>
+                            {currentQuestion.answers.map((answer, index) => (
+                            <li key={index} style={{ marginBottom: '10px' }}>
+                                <label>
+                                <input
+                                    type="radio"
+                                    name="answer"
+                                    value={answer.answerID}
+                                    checked={selectedAnswer === answer.answerID.toString()}
+                                    onChange={() => handleAnswerSelect(answer)}
+                                />
+                                {answer.title}
+                                </label>
+                            </li>
                             ))}
                         </ul>
                     </div>
                     <div className='button-container' style={{marginBottom: '120px', marginLeft: 50, marginTop: '50px'}}>
-                        {/* we have to use if statement here,        
+                        {/* we have to use if statement here,
                         when we're in the last question, the content of button will be finish */}
                         <Button onClick={handleNextQuestion} style={customButtonStyle} type='button'>
                             {currentQuestion?.number === 7 ? 'Further' : 'Next'}
@@ -81,7 +92,7 @@ export default observer (function GadQuestionPage(){
                 </div>
                 )}
             </div>
-            
+
         </>
     )
 })

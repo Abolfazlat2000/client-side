@@ -11,11 +11,12 @@ import { useNavigate } from 'react-router-dom';
 
 export default observer (function AdditionalQuestions(){
     const {counselingStore} = useStore();
-    const {setActiveItem, nextQuestion, getCurrentQuestion, handleExtraAnswer,extAnswers, isInput, categoryId, loadExtraTests,extraTests} = counselingStore;
-    const [currentQuestion, setCurrentQuestion] = useState<ExtraQuestionDTO | null>(null);
+    const {setActiveItem, handleExtraAnswer,extAnswers, isInput, categoryId, loadExtraTests,extraTests,extAnswersTitle,handleAnswerTitle} = counselingStore;
     const [categoryIds, setCategoryIds] = useState([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
     const navigate = useNavigate();
-
+    let currentCategoryId: number;
+    const [inputImage, setInputImage] = useState(false);
+    const [textAreaValue, setTextAreaValue] = useState("");
 
     useEffect(() => {
         loadQuestionForCurrentCategory();
@@ -23,17 +24,21 @@ export default observer (function AdditionalQuestions(){
 
     const loadQuestionForCurrentCategory = async () => {
         if(categoryIds.length > 0) {
-            console.log(categoryIds);
-            const currentCategoryId = categoryIds[0];
+            currentCategoryId = categoryIds[0];
             const newCategoryIds = categoryIds.slice(1); // Create a new array without the first element
             setCategoryIds(newCategoryIds); // Update state
-            console.log(newCategoryIds);
-            console.log(currentCategoryId);
+            if (currentCategoryId === 7 || currentCategoryId === 8) {
+                setInputImage(true);
+            }else {
+                setInputImage(false);
+            }
             if (currentCategoryId !== undefined) {
                 await loadExtraTests(currentCategoryId);
                 handleExtraAnswer();
-                console.log(extraTests);
+                handleAnswerTitle();
             }
+            setTextAreaValue("")
+
         }
     };
 
@@ -51,24 +56,22 @@ export default observer (function AdditionalQuestions(){
         }
     };
 
-    // const handleAnswerSelect = async (answer: AnswerReadDTO, inputAnswer?: string) => {
-    //     getResult(answer.score);
-    //     let userAnswer = answer.title;
-    //     if (answer.categoryID !== 4 && answer.categoryID !== 5) {
-    //         userAnswer = inputAnswer ?? answer.title ;
-    //     }
-    //     try {
-    //         await agent.Tests.CreateUserAnswer({
-    //             userAnswerID: userAnswerId,
-    //             userAnswerTitle: answer.title,
-    //             categoryID: answer.categoryID,
-    //             questionNumber: currentQuestion?.number ?? 0
-    //         });
-    //         incrementUserAnswerId();
-    //     } catch (error) {
-    //         console.error('Error creating user answer', error);
-    //     }
-    // };
+    const handleAnswerSelect = async (answerTitle: string, inputAnswer?: string) => {
+        console.log("fuck you farnaz");
+
+        let userAnswer: string = answerTitle;
+        if (isInput) {
+            userAnswer = answerTitle ;
+        }
+        try {
+            await agent.Tests.CreateUserAnswer({
+                userAnswerTitle: userAnswer,
+                categoryID: currentCategoryId,
+            });
+        } catch (error) {
+            console.error('Error creating user answer', error);
+        }
+    };
 
     // resetResult();
 
@@ -82,6 +85,7 @@ export default observer (function AdditionalQuestions(){
         paddingBottom: 10
     };
 
+
     return(
         <>
             <NavBar />
@@ -92,15 +96,49 @@ export default observer (function AdditionalQuestions(){
                 {extraTests && (
                 <div className='questions'>
                     {/* questions should come one by one from API */}
-                    <p style={{marginLeft: 450, marginRight: 450}}>{extraTests.question}</p>
+                    <p style={{marginLeft: -150, marginRight: 450, marginBottom:40}}>{extraTests.question}</p>
+                    {inputImage ? <textarea
+                                    style={{
+                                        height: '100px', // Adjust height as needed
+                                        width: '250px', // Adjust width as needed
+                                        marginRight: '100px',
+                                        marginLeft: '-50px',
+                                        resize: 'none', // Prevents resizing
+                                        overflow: 'auto', // Allows scrolling
+                                        verticalAlign: 'top', // Aligns text to the top
+                                        padding: '0', // Adjust padding as needed
+                                    }}
+                                    value={textAreaValue}
+                                    onChange={(e) => setTextAreaValue(e.target.value)}
+                                /> : null}
+                    {/* answers will come in multiple choise form from API */}
+                    {isInput ?
+                        (
+                            <textarea
+                                style={{
+                                    height: '250px', // Adjust height as needed
+                                    width: '250px', // Adjust width as needed
+                                    marginRight: '100px',
+                                    marginLeft: '100px',
+                                    resize: 'none', // Prevents resizing
+                                    overflow: 'auto', // Allows scrolling
+                                    verticalAlign: 'top', // Aligns text to the top
+                                    padding: '0', // Adjust padding as needed
+                                }}
+                                value={textAreaValue}
+                                onChange={(e) => setTextAreaValue(e.target.value)}
+                            />
+                        ) : (
+                            <ul className='listContainer' style={{marginLeft: -150, marginRight: 300}}>
+                                {extAnswers!.map((answer: string, index: number) =>
+                                    <li key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+                                        <Image onClick={() => handleAnswerSelect(extAnswersTitle[index])} style={{height: 250, width: 250, marginRight: 100, marginLeft: 100}} src={answer} alt={`${index + 1}`}/>
 
-                {/* answers will come in multiple choise form from API */}
-                {isInput ? (
-                            <input type="text" />
-                           ) : (
-                            extAnswers!.map((answer: string, index: number) => <Image key={index} src={answer} alt={`${index + 1}`} />)
-                )}
-                    <div className='button-container' style={{marginBottom: 150, marginLeft: 100}} >
+                                    </li>
+                                )}
+                            </ul>
+                    )}
+                    <div className='button-container' style={{marginTop: 150, marginLeft: -150}} >
                         {/* we have to use if statement here,
                         when we're in the last question, the content of button will be finish */}
                         <Button onClick={handleNextQuestion} style={customButtonStyle}  type='button'>
