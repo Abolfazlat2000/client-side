@@ -84,6 +84,7 @@ export default observer (function AdditionalQuestions(){
                     userAnswerTitle: userAnswer,
                 });
             }
+            setExtAnswersValue("");
         } catch (error) {
             console.error('Error creating user answer', error);
         }
