@@ -19,7 +19,7 @@ import ContactUs from "../details/ContactUs";
 
 
 export default observer(function CounselingDashboard(){
-    
+
     const {counselingStore} = useStore();
     const {activeItem} = counselingStore;
 
@@ -35,7 +35,7 @@ export default observer(function CounselingDashboard(){
         mbtiResultPage: <MbtiResultPage />,
         agreementPage: <AgreementPage />,
         userInfoForm: <UserInfoForm />,
-        AdditionalQuestions: <AdditionalQuestions />,
+        additionalQuestions: <AdditionalQuestions />,
         categoryList: <CategoryList />,
         homePage: <HomePage />,
         contactUs: <ContactUs />

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default observer( function GadResultPage(){
     const {counselingStore} = useStore();
     const [defaultActiveIndex] = useState();
-    const {setActiveItem} = counselingStore;
+    const {setActiveItem, calculateFinalResult,resetResult} = counselingStore;
 
     const customButtonStyle = {
         backgroundColor: '#33737d',
@@ -20,18 +20,13 @@ export default observer( function GadResultPage(){
         paddingBottom: 10
     };
 
-    const {calculateFinalResult} = counselingStore;
+
     useEffect(() => {
-        counselingStore.calculateFinalResult([
-            {min: 0, max:4, resultType:'Minimal anxiety'},
-            {min: 5, max:9, resultType:'Mild anxiety'},
-            {min: 10, max:14, resultType:'Moderate anxiety'},
-            {min: 15, max:21, resultType:'severe anxiety'}
-            
-        ]);
-    }, [counselingStore.calculateFinalResult, counselingStore]);
+
+    }, []);
 
     const handleButtonClick = () => {
+        resetResult();
         setActiveItem('homePage');
     }
     return(
@@ -39,14 +34,14 @@ export default observer( function GadResultPage(){
         <NavBar />
         <div className="page-container">
             <div className="show-score">
-                <p style={{color: '#242424'}}>You have:
+                <p style={{color: '#242424'}}>
                     {calculateFinalResult([
-            {min: 0, max:4, resultType:'Minimal anxiety'},
-            {min: 5, max:9, resultType:'Mild anxiety'},
-            {min: 10, max:14, resultType:'Moderate anxiety'},
-            {min: 15, max:21, resultType:'severe anxiety'}
-            
-        ])}
+                    {min: 0, max:4, resultType:'Minimal anxiety'},
+                    {min: 5, max:9, resultType:'Mild anxiety'},
+                    {min: 10, max:14, resultType:'Moderate anxiety'},
+                    {min: 15, max:21, resultType:'severe anxiety'}
+
+                    ])}
                 </p>
             </div>
             <div className="recommendation">

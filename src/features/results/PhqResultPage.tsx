@@ -6,7 +6,7 @@ import { Accordion, AccordionTitle, Button, Image, Message, MessageHeader, Messa
 
 export default observer( function PhqResultPage(){
     const {counselingStore} = useStore();
-    const {setActiveItem} = counselingStore;
+    const {setActiveItem,calculateFinalResult,resetResult} = counselingStore;
     const [defaultActiveIndex] = useState();
 
     const customButtonStyle = {
@@ -17,35 +17,28 @@ export default observer( function PhqResultPage(){
         paddingLeft: 40,
         paddingTop: 10,
         paddingBottom: 10
-    }; 
+    };
 
     const handleButtonClick = () => {
+        resetResult();
         setActiveItem('homePage');
     }
+    useEffect(() => {
 
-    // const {calculateFinalResult} = counselingStore;
-    // useEffect(() => {
-    //     calculateFinalResult([
-    //         {min: 0, max:4, resultType:'Minimal anxiety'},
-    //         {min: 5, max:9, resultType:'Mild anxiety'},
-    //         {min: 10, max:14, resultType:'Moderate anxiety'},
-    //         {min: 15, max:21, resultType:'severe anxiety'}
-            
-    //     ]);
-    // }, []);
+    }, []);
     return(
         <>
         <NavBar />
         <div className="page-container">
             <div className="show-score">
-                <p style={{color: '#242424'}}>You have:
-                    {/* {calculateFinalResult([
-            {min: 0, max:4, resultType:'Minimal anxiety'},
-            {min: 5, max:9, resultType:'Mild anxiety'},
-            {min: 10, max:14, resultType:'Moderate anxiety'},
-            {min: 15, max:21, resultType:'severe anxiety'}
-            
-        ])} */}
+            <p style={{color: '#242424'}}>
+                    {calculateFinalResult([
+                    {min: 0, max:4, resultType:'Minimal anxiety'},
+                    {min: 5, max:9, resultType:'Mild anxiety'},
+                    {min: 10, max:14, resultType:'Moderate anxiety'},
+                    {min: 15, max:21, resultType:'severe anxiety'}
+
+                    ])}
                 </p>
             </div>
             <div className="recommendation">

@@ -14,6 +14,8 @@ export default observer (function GadQuestionPage(){
     const {setActiveItem, nextQuestion, getCurrentQuestion, getResult, loadTests, userAnswerId} = counselingStore;
     const [currentQuestion, setCurrentQuestion] = useState<TestReadDTO | null>(null);
     const [selectedAnswer, setSelectedAnswer] = useState("");
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
     useEffect(() => {
         const loadInitialData = async () => {
             await loadTests(3);
@@ -25,11 +27,16 @@ export default observer (function GadQuestionPage(){
 
     const handleNextQuestion = () => {
         if(currentQuestion?.number === 7) {
-            setActiveItem("AdditionalQuestions");
+            setActiveItem("additionalQuestions");
         } else {
-            counselingStore.nextQuestion();
-            setCurrentQuestion(getCurrentQuestion);
-            setSelectedAnswer("");
+            if (selectedAnswer !== "") {
+                nextQuestion();
+                setCurrentQuestion(getCurrentQuestion);
+                setSelectedAnswer("");
+                setErrorMessage(null);
+            } else {
+                setErrorMessage("Must Select one at least!");
+            }
         }
     };
 
@@ -45,9 +52,9 @@ export default observer (function GadQuestionPage(){
 
 
     const handleAnswerSelect = (answer: AnswerReadDTO) => {
-        counselingStore.getResult(answer.score);
+        getResult(answer?.score);
         setSelectedAnswer(answer.answerID.toString());
-
+        setErrorMessage(null);
     }
 
 
@@ -56,6 +63,15 @@ export default observer (function GadQuestionPage(){
             <NavBar />
             <div className='question-page-container'>
                 <div className='title' style={{textAlign: 'center'}}>
+                    {errorMessage ?
+                        <div className="ui warning message">
+                            <i className="close icon"></i>
+                                <div className="header">
+                                    You must select an answer first!
+                                </div>
+                      </div>
+
+                    : null}
                     <p style={{marginTop: 50, color: '#48767d', fontWeight: 'bolder', fontSize: '2rem', textAlign: 'center'}}>GAD-7 Test</p>
                 </div>
                 {currentQuestion && (

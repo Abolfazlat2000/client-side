@@ -34,12 +34,12 @@ export default observer(function HomePage(){
                 <Image src='assets/pic7.JPG' alt='home-page-background' fluid style={{position: 'fixed', top: 60, left: 0, width: '100%', height: '100%', zIndex: -1}} />
                 <div className={`text-container ${animationClass}`}>
                     <h2 className="text-header">
-                        Elvate Your Well-being with<br />Insightful Psychological Tests
+                        Elevate Your Well-being with<br />Insightful Psychological Tests
                     </h2>
                     <h4 className="text-main" >
                         {/*a dedicated space for enhancing mental well-being<br />through advanced psycological assessments. */}
                         Welcome To Counseling,<br />Uncover valuable insights into your strengths and<br />personal challenges with our diverse range of tests.
-                    </h4> 
+                    </h4>
                     <Button onClick={handleOnclickButton} floated = 'left' style={customButtonStyle}  type='button' content='Take me to the Test' />
                 </div>
                 <Image className={animationClass} src='assets/pic8.JPG' fluid style={{position: 'fixed', top: 135, left: 650, width: '350px', height: '350px'}}/>

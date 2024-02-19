@@ -2,6 +2,7 @@ import { computed, makeAutoObservable, observable, runInAction } from "mobx";
 import { CategoryReadDTO } from "../shared/CategoryReadDto";
 import { AnswerReadDTO } from "../shared/AnswerReadDTO";
 import { TestReadDTO } from "../shared/TestReadDTO";
+import { UserReadDTO } from "../shared/UserReadDTO";
 import { ExtraQuestionDTO } from '../../app/shared/ExtraQuestionDTO';
 import agent from "../api/agent";
 
@@ -10,6 +11,7 @@ export default class CounselingStore{
     activeItem: string = "";
     currentQuestionIndex: number = 0;
     tests: TestReadDTO[] = [];
+    userInfo: UserReadDTO | undefined;
     userAnswerId: number = 1;
     userId: number = 10;
     result: number = 0;
@@ -48,8 +50,11 @@ export default class CounselingStore{
     setActiveItem = (activeItem: string) => {
         this.activeItem = activeItem;
     }
+    setUserInfo = (userInfo: UserReadDTO) => {
+        this.userInfo = userInfo;
+    }
 
-    nextQuestion(){
+    nextQuestion = () => {
         this.currentQuestionIndex += 1;
     }
 
@@ -76,8 +81,9 @@ export default class CounselingStore{
         this.extAnswersTitle = answersTitle;
     }
 
-    getResult(score: number){
+    getResult = (score: number) => {
         this.result += score;
+        console.log(this.result);
     }
 
     incrementUserAnswerId = () => {
@@ -88,13 +94,15 @@ export default class CounselingStore{
         this.userId += 1;
     }
 
-    calculateFinalResult(thresholds: {min: number; max: number; resultType: string}[]){
+    calculateFinalResult = (thresholds: {min: number; max: number; resultType: string}[]) => {
+        console.log(thresholds);
+        console.log(this.result);
         const finalResult = this.result;
         const resultType =  thresholds.find(({ min, max}) => finalResult >= min && finalResult <= max)?.resultType;
         return resultType || 'Unknown';
     }
 
-    resetResult() {
+    resetResult = () => {
         this.result = 0;
         this.userAnswerId = 0;
     }

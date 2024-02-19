@@ -8,6 +8,7 @@ import { AnswerSubmitDTO } from '../shared/AnswerSubmitDTO';
 import { UserAnswerSubmitDTO } from '../shared/UserAnswerSubmitDTO';
 import { UserSubmitDTO } from '../shared/UserSubmitDTO';
 import { ExtraQuestionDTO } from '../shared/ExtraQuestionDTO';
+import { UserReadDTO } from '../shared/UserReadDTO';
 
 
 const sleep = (delay : number) => {
@@ -47,7 +48,7 @@ const Tests = {
     AnswerList: (id : number) => requests.get<AnswerReadDTO>(`/Answers/GetAnswersByCategory/${id}/`),
     CreateTest: (test : TestSubmitDTO) => axios.post<void>('/Test/CreateTest/', test),
     CreateAnswer: (answer : AnswerSubmitDTO) => axios.post<void>('/Answers/CreateAnswer/', answer),
-    CreateUser: (user : UserSubmitDTO) => axios.post<void>('/User/CreateUser/', user),
+    CreateUser: (user : UserSubmitDTO) => axios.post<UserReadDTO>('/User/CreateUser/', user),
     CreateUserAnswer: (userAnswer : UserAnswerSubmitDTO) => axios.post<void>('/UserAnswer/CreateUserAnswer/', userAnswer),
     GetExtraQuestion: (id : number) => requests.get<ExtraQuestionDTO>(`/ExtraQuestions/GetTest/${id}/`),
 }
